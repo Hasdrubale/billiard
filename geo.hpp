@@ -23,7 +23,34 @@ class Particle {
   void rotate_backward(double const);
 };
 
+class Line {
+ private:
+  // y=mx+q
+  double m_;
+  double q_;
 
+ public:
+  Line(double m, double q);
+  Line(Point a, Point b);
+  Line(Particle p);
+  double m() const;
+  double q() const;
+  double angle() const;
+  void set_new(Particle const&);
+};
+
+class Border{
+  private:
+    double r1_;
+    double r2_;
+    double l_;
+    char type_;
+
+  public:
+    
+};
+
+bool operator!=(Point a, Point b);
 
 }
 
