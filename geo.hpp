@@ -1,11 +1,11 @@
 #ifndef GEO_HPP
 #define GEO_HPP
 
-namespace Geo{
+namespace Geo {
 
 struct Point {
-    double x{0.};
-    double y{0.};
+  double x{0.};
+  double y{0.};
 };
 
 class Particle {
@@ -39,19 +39,23 @@ class Line {
   void set_new(Particle const&);
 };
 
-class Border{
-  private:
-    double r1_;
-    double r2_;
-    double l_;
-    char type_;
+class Border {
+ private:
+  double r1_;
+  double r2_;
+  double l_;
+  char type_;
 
-  public:
-    
+ public:
+  Border(double r1, double r2, double l, char type);
+  double r1() const;
+  double r2() const;
+  double l() const;
+  char type() const;
 };
 
 bool operator!=(Point a, Point b);
 
-}
+}  // namespace Geo
 
 #endif
