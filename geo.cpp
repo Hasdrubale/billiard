@@ -10,12 +10,12 @@ Geo::Line::Line(Geo::Point a, Geo::Point b)
       q_{b.y - ((b.y - a.y) / (b.x - a.x)) * b.x} {}
 
 Geo::Line::Line(Geo::Particle p)
-    : m_{std::atan(p.angle())},
-      q_{p.position().y - (std::atan(p.angle())) * p.position().x} {}
+    : m_{std::tan(p.angle())},
+      q_{p.position().y - (std::tan(p.angle())) * p.position().x} {}
 
 double Geo::Line::m() const { return m_; }
 double Geo::Line::q() const { return q_; }
-double Geo::Line::angle() const { return std::tan(m_); }
+double Geo::Line::angle() const { return std::atan(m_); }
 void Geo::Line::set_new(Geo::Particle const& p) {
   Geo::Line l{p};
   m_ = l.m();
