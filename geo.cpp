@@ -53,12 +53,14 @@ void Geo::Particle::rotate_forward(double const angle) {
   assert(std::abs(angle_) <= M_PI / 2);
 }
 
-Geo::Billiard::Billiard(double r1, double r2, double l, char type): r1_{r1}, r2_{r2}, l_{l}, type_{type}{}
+Geo::Billiard::Billiard(double r1, double r2, double l, char type, int degree)
+    : r1_{r1}, r2_{r2}, l_{l}, type_{type}, degree_{degree} {}
 
-double Geo::Billiard::r1() const{return r1_;}
-double Geo::Billiard::r2() const{return r2_;}
-double Geo::Billiard::l() const{return l_;}
-char Geo::Billiard::type() const{return type_;}
+double Geo::Billiard::r1() const { return r1_; }
+double Geo::Billiard::r2() const { return r2_; }
+double Geo::Billiard::l() const { return l_; }
+char Geo::Billiard::type() const { return type_; }
+int Geo::Billiard::degree() const { return degree_; }
 
 bool Geo::operator!=(Geo::Point a, Geo::Point b) {
   return std::abs((a.x - b.x)) > 0.001 || std::abs((a.y - b.y)) > 0.001;

@@ -45,13 +45,15 @@ class Billiard {
   double r2_;
   double l_;
   char type_;
+  int degree_;
 
  public:
-  Billiard(double r1, double r2, double l, char type);
+  Billiard(double r1, double r2, double l, char type, int degree);
   double r1() const;
   double r2() const;
   double l() const;
   char type() const;
+  int degree() const;
 };
 
 bool operator!=(Point a, Point b);
