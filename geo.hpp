@@ -39,7 +39,7 @@ class Line {
   void set_new(Particle const&);
 };
 
-class Border {
+class Billiard {
  private:
   double r1_;
   double r2_;
@@ -47,7 +47,7 @@ class Border {
   char type_;
 
  public:
-  Border(double r1, double r2, double l, char type);
+  Billiard(double r1, double r2, double l, char type);
   double r1() const;
   double r2() const;
   double l() const;
@@ -56,6 +56,10 @@ class Border {
 
 bool operator!=(Point a, Point b);
 
+void move(Particle&, Billiard const&);
+
 }  // namespace Geo
+
+
 
 #endif
