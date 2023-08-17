@@ -1,4 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include <cmath>
+
 #include "doctest.h"
 #include "geo.hpp"
 
@@ -14,4 +16,20 @@ TEST_CASE("Line constructors") {
   CHECK(s.m() == doctest::Approx(1.));
   CHECK(s.q() == doctest::Approx(1.));
   CHECK(s.angle() == doctest::Approx(M_PI / 4));
+}
+
+TEST_CASE("Testing motion with circular billiard") {
+  SUBCASE("Test 1") {
+    Geo::Point pos{0., 1.};
+    Geo::Particle p{pos, M_PI / 4};
+    Geo::Billiard bill{5., 3., 10., 'c', 0};
+    move(p, bill);
+    CHECK(p.angle() == doctest::Approx(0.9036));
+    CHECK(p.position().x == doctest::Approx(0.));
+    CHECK(p.position().y == doctest::Approx(-0.701));
+  }
+}
+
+TEST_CASE("Testing motion with linear billiard"){
+  
 }
