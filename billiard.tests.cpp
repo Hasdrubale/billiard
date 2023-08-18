@@ -30,6 +30,32 @@ TEST_CASE("Testing motion with circular billiard") {
   }
 }
 
-TEST_CASE("Testing motion with linear billiard"){
-  
+TEST_CASE("Testing motion with linear billiard") {
+  SUBCASE("Test 1") {
+    Geo::Point p0{0., 4.};
+    Geo::Particle p{p0, M_PI / 4};
+    Geo::Billiard bill{5., 3., 10., 'l', 0};
+    move(p, bill);
+    CHECK(p.position().x == doctest::Approx(0.));
+    CHECK(p.position().y == doctest::Approx(-4.17528));
+    CHECK(p.angle() == doctest::Approx(-44.52 * 2 * M_PI / 360));
+  }
+  SUBCASE("Test 2") {
+    Geo::Point p0{0., 2.};
+    Geo::Particle p{p0, -M_PI / 6};
+    Geo::Billiard bill{5., 3., 6., 'l', 0};
+    move(p, bill);
+    CHECK(p.position().x == doctest::Approx(6.));
+    CHECK(p.position().y == doctest::Approx(-1.4641));
+    CHECK(p.angle() == doctest::Approx(-M_PI / 6));
+  }
+  SUBCASE("Test 3") {
+    Geo::Point p0{0., -1.};
+    Geo::Particle p{p0, M_PI / 3};
+    Geo::Billiard bill{7., 4., 14., 'l', 0};
+    move(p, bill);
+    CHECK(p.position().x == doctest::Approx(0.));
+    CHECK(p.position().y == doctest::Approx(5.51714));
+    CHECK(p.angle() == doctest::Approx(0.82784));
+  }
 }
