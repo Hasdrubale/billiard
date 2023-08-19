@@ -47,12 +47,8 @@ struct Billiard {
   int degree;
 };
 
-bool operator!=(Point a, Point b);
-
-void move(Particle&, Billiard const&);
+// bool operator!=(Point a, Point b);
 
 }  // namespace Geo
-
-
 
 #endif
