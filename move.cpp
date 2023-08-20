@@ -20,7 +20,7 @@ void Mov::move(Geo::Particle& p, Geo::Billiard const& bill) {
     }
 
     Geo::Line perp{Mov::norm(h, bill)};
-    double const angle = Geo::find_angle(perp, go);
+    double angle = Mov::find_angle(perp, go);
     p.rotate_forward(angle);
     if (std::abs(p.angle() - std::atan(perp.m())) < 0.0001) {
       p.rotate_forward(angle);
@@ -33,6 +33,29 @@ void Mov::move(Geo::Particle& p, Geo::Billiard const& bill) {
     go.set_new(p);
     continue;
   }
+}
+
+double Mov::find_angle(Geo::Line const& r, Geo::Line const& s){
+  double r_ang{};
+  double s_ang{};
+  if (r.m() < 0) {
+    r_ang = M_PI + std::atan(r.m());
+  } else {
+    r_ang = std::atan(r.m());
+  }
+  if (s.m() < 0) {
+    s_ang = M_PI + std::atan(s.m());
+  } else {
+    s_ang = std::atan(s.m());
+  }
+  assert(r_ang >= 0 && r_ang <= M_PI);
+  assert(s_ang >= 0 && s_ang <= M_PI);
+  double ang{std::abs(r_ang - s_ang)};
+  assert(ang >= 0 && ang <= M_PI);
+  if (ang > M_PI / 2) {
+    ang = M_PI - ang;
+  }
+  return ang;
 }
 
 const Geo::Point Mov::hit(Geo::Line const& go, Geo::Billiard const& bill) {}
