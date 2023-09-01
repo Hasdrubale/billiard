@@ -36,7 +36,7 @@ class Line {
   double m() const;
   double q() const;
   double angle() const;
-  //void set_new(Particle const&);
+  //void set_new(Point& a, Point& b);
 };
 
 struct Billiard {

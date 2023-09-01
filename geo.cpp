@@ -16,8 +16,8 @@ Geo::Line::Line(Geo::Particle p)
 double Geo::Line::m() const { return m_; }
 double Geo::Line::q() const { return q_; }
 double Geo::Line::angle() const { return std::atan(m_); }
-/*void Geo::Line::set_new(Geo::Particle const& p) {
-  Geo::Line l{p};
+/*void Geo::Line::set_new(Geo::Point& a, Geo::Point& b) {
+  Geo::Line l{a, b};
   m_ = l.m();
   q_ = l.q();
 }*/

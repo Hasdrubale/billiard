@@ -32,11 +32,17 @@ void Mov::move(Geo::Particle& p, Geo::Billiard const& bill) {
 
 double Mov::find_angle(Geo::Line const& r, Geo::Particle const& p) {
   double r_ang{};
-  double s_ang{p.angle()};
+  double s_ang{};
+  Geo::Line const s{p};
   if (r.m() < 0) {
     r_ang = M_PI + std::atan(r.m());
   } else {
     r_ang = std::atan(r.m());
+  }
+  if (s.m() < 0) {
+    s_ang = M_PI + std::atan(s.m());
+  } else {
+    s_ang = std::atan(s.m());
   }
   assert(r_ang >= 0 && r_ang <= M_PI);
   assert(s_ang >= 0 && s_ang <= M_PI);
@@ -47,4 +53,3 @@ double Mov::find_angle(Geo::Line const& r, Geo::Particle const& p) {
   }
   return ang;
 }
-

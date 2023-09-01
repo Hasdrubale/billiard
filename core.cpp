@@ -46,6 +46,33 @@ const Geo::Point Mov::hit(Geo::Particle const& p, Geo::Billiard const& bill) {
 }
 
 const Geo::Line Mov::norm(Geo::Point const& point, Geo::Billiard const& bill) {
+  if (bill.type == 'l') {
+    double new_angle{};
+
+    if (point.y > 0) {
+      Geo::Point a{0., bill.r1};
+      Geo::Point b{bill.l, bill.r2};
+      Geo::Line r{a, b};
+      if (r.angle() >= 0) {
+        new_angle = -((M_PI / 2) - r.angle());
+      } else {
+        new_angle = (M_PI / 2) + r.angle();
+      }
+    } else {
+      Geo::Point a{0., -bill.r1};
+      Geo::Point b{bill.l, -bill.r2};
+      Geo::Line r{a, b};
+      if (r.angle() >= 0) {
+        new_angle = -((M_PI / 2) - r.angle());
+      } else {
+        new_angle = (M_PI / 2) + r.angle();
+      }
+    }
+
+    Geo::Particle const k{point, new_angle};
+    Geo::Line const l{k};
+    return l;
+  }
   const Geo::Point x{bill.r1, bill.r2};
   const Geo::Line l{point, x};
   return l;
