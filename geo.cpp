@@ -16,11 +16,11 @@ Geo::Line::Line(Geo::Particle p)
 double Geo::Line::m() const { return m_; }
 double Geo::Line::q() const { return q_; }
 double Geo::Line::angle() const { return std::atan(m_); }
-void Geo::Line::set_new(Geo::Particle const& p) {
+/*void Geo::Line::set_new(Geo::Particle const& p) {
   Geo::Line l{p};
   m_ = l.m();
   q_ = l.q();
-}
+}*/
 
 Geo::Particle::Particle(Geo::Point p, double a) : position_{p}, angle_{a} {}
 
@@ -58,8 +58,7 @@ bool Geo::operator!=(Geo::Point a, Geo::Point b) {
 }
 
 const Geo::Point Geo::intsec(Geo::Line const& r, Geo::Line const& s) {
-  double const det{r.a() * s.b() - r.b() * s.a()};
-  Ric::Point const p{(r.b() * s.c() - s.b() * r.c()) / (det),
-                     (s.a() * r.c() - r.a() * s.c()) / (det)};
+  Geo::Point const p{(r.q() - s.q()) / (s.m() - r.m()),
+                     r.m() * ((r.q() - s.q()) / (s.m() - r.m())) + r.q()};
   return p;
 }

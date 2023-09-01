@@ -19,6 +19,14 @@ TEST_CASE("Line constructors") {
   CHECK(s.angle() == doctest::Approx(M_PI / 4));
 }
 
+TEST_CASE("Testing intersection") {
+  Geo::Line r{3., 2.};
+  Geo::Line s{-2., 1.};
+  Geo::Point p = Geo::intsec(r, s);
+  CHECK(p.x == doctest::Approx(-0.2));
+  CHECK(p.y == doctest::Approx(1.4));
+}
+
 TEST_CASE("Testing motion with circular billiard") {
   SUBCASE("Test 1") {
     Geo::Point pos{0., 1.};
