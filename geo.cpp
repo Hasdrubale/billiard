@@ -53,6 +53,13 @@ void Geo::Particle::rotate_forward(double const angle) {
   assert(std::abs(angle_) <= M_PI / 2);
 }
 
-/*bool Geo::operator!=(Geo::Point a, Geo::Point b) {
+bool Geo::operator!=(Geo::Point a, Geo::Point b) {
   return std::abs((a.x - b.x)) > 0.001 || std::abs((a.y - b.y)) > 0.001;
-}*/
+}
+
+const Geo::Point Geo::intsec(Geo::Line const& r, Geo::Line const& s) {
+  double const det{r.a() * s.b() - r.b() * s.a()};
+  Ric::Point const p{(r.b() * s.c() - s.b() * r.c()) / (det),
+                     (s.a() * r.c() - r.a() * s.c()) / (det)};
+  return p;
+}

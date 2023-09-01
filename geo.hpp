@@ -36,7 +36,7 @@ class Line {
   double m() const;
   double q() const;
   double angle() const;
-  void set_new(Particle const&);
+  //void set_new(Particle const&);
 };
 
 struct Billiard {
@@ -47,8 +47,9 @@ struct Billiard {
   int degree;
 };
 
-// bool operator!=(Point a, Point b);
+bool operator!=(Point a, Point b);
 
+const Point intsec(Line const& r, Line const& s);
 }  // namespace Geo
 
 #endif
