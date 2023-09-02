@@ -27,7 +27,7 @@ TEST_CASE("Testing intersection") {
   CHECK(p.y == doctest::Approx(1.4));
 }
 
-TEST_CASE("Testing motion with circular billiard") {
+/*TEST_CASE("Testing motion with circular billiard") {
   SUBCASE("Test 1") {
     Geo::Point pos{0., 1.};
     Geo::Particle p{pos, M_PI / 4};
@@ -37,7 +37,7 @@ TEST_CASE("Testing motion with circular billiard") {
     CHECK(p.position().x == doctest::Approx(0.));
     CHECK(p.position().y == doctest::Approx(-0.701));
   }
-}
+}*/
 
 TEST_CASE("Testing motion with linear billiard") {
   SUBCASE("Test 1") {

@@ -1,3 +1,4 @@
+#include <cassert>
 #include <cmath>
 
 #include "geo.hpp"
@@ -28,15 +29,17 @@ const Geo::Point Mov::hit(Geo::Particle const& p, Geo::Billiard const& bill) {
       return b;
     }
 
-    Geo::Line leftborder{lowsx, highsx};
+    Geo::Line leftborder{9999999., 0.};
     const Geo::Point c{intsec(go, leftborder)};
-    if (std::abs(c.y) <= bill.r1) {
+    assert(std::abs(c.x) <= 0.0001);
+    if (std::abs(c.y) <= bill.r1 && c != p.position()) {
       return c;
     }
 
-    Geo::Line rightborder{lowdx, highdx};
-    const Geo::Point d{intsec(go, rightborder)};
-    if (std::abs(d.y) <= bill.r1) {
+    Geo::Line rightborder{0., 0., bill.l};
+    const Geo::Point d{intsec(rightborder, go)};
+    assert(std::abs(d.x - bill.l) <= 0.0001);
+    if (std::abs(d.y) <= bill.r2) {
       return d;
     }
   }

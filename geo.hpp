@@ -28,15 +28,18 @@ class Line {
   // y=mx+q
   double m_;
   double q_;
+  double infinity_;
 
  public:
+  Line(double m, double q, double infinity);
   Line(double m, double q);
   Line(Point a, Point b);
   Line(Particle p);
   double m() const;
   double q() const;
   double angle() const;
-  //void set_new(Point& a, Point& b);
+  double infinity() const;
+  // void set_new(Point& a, Point& b);
 };
 
 struct Billiard {

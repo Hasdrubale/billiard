@@ -3,19 +3,25 @@
 #include <cassert>
 #include <cmath>
 
-Geo::Line::Line(double m, double q) : m_{m}, q_{q} {}
+Geo::Line::Line(double m, double q) : m_{m}, q_{q}, infinity_{0.} {}
+
+Geo::Line::Line(double m, double q, double infinity)
+    : m_{m}, q_{q}, infinity_{infinity} {}
 
 Geo::Line::Line(Geo::Point a, Geo::Point b)
     : m_{(b.y - a.y) / (b.x - a.x)},
-      q_{b.y - ((b.y - a.y) / (b.x - a.x)) * b.x} {}
+      q_{b.y - ((b.y - a.y) / (b.x - a.x)) * b.x},
+      infinity_{0.} {}
 
 Geo::Line::Line(Geo::Particle p)
     : m_{std::tan(p.angle())},
-      q_{p.position().y - (std::tan(p.angle())) * p.position().x} {}
+      q_{p.position().y - (std::tan(p.angle())) * p.position().x},
+      infinity_{0.} {}
 
 double Geo::Line::m() const { return m_; }
 double Geo::Line::q() const { return q_; }
 double Geo::Line::angle() const { return std::atan(m_); }
+double Geo::Line::infinity() const { return infinity_; }
 /*void Geo::Line::set_new(Geo::Point& a, Geo::Point& b) {
   Geo::Line l{a, b};
   m_ = l.m();
@@ -58,7 +64,17 @@ bool Geo::operator!=(Geo::Point a, Geo::Point b) {
 }
 
 const Geo::Point Geo::intsec(Geo::Line const& r, Geo::Line const& s) {
-  Geo::Point const p{(r.q() - s.q()) / (s.m() - r.m()),
-                     r.m() * ((r.q() - s.q()) / (s.m() - r.m())) + r.q()};
-  return p;
+  if (std::abs(r.infinity()) <= 0.00001 && std::abs(s.infinity()) <= 0.00001) {
+    Geo::Point const p{(r.q() - s.q()) / (s.m() - r.m()),
+                       r.m() * ((r.q() - s.q()) / (s.m() - r.m())) + r.q()};
+    return p;
+  } else {
+    if (std::abs(r.infinity()) > 0.00001) {
+      Geo::Point const p{r.infinity(), s.m() * r.infinity() + s.q()};
+      return p;
+    } else {
+      Geo::Point const p{s.infinity(), r.m() * s.infinity() + r.q()};
+      return p;
+    }
+  }
 }
