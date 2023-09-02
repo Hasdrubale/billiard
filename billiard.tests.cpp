@@ -4,6 +4,7 @@
 #include "doctest.h"
 #include "geo.hpp"
 #include "move.hpp"
+#include "stats.hpp"
 
 TEST_CASE("Line constructors") {
   Geo::Point a{1., 2.};
@@ -67,4 +68,29 @@ TEST_CASE("Testing motion with linear billiard") {
     CHECK(p.position().y == doctest::Approx(5.51714));
     CHECK(p.angle() == doctest::Approx(0.82784));
   }
+}
+
+TEST_CASE("Testing statistics") {
+  std::vector<Geo::Particle> particles{};
+  Geo::Point const p1{0., 1.6};
+  Geo::Point const p2{0., 2.7};
+  Geo::Point const p3{0., 3.5};
+  Geo::Particle const par1{p1, -0.7};
+  Geo::Particle const par2{p2, 0.5};
+  Geo::Particle const par3{p3, 1.2};
+  particles.push_back(par1);
+  particles.push_back(par2);
+  particles.push_back(par3);
+
+  Stats::Statistics y{Stats::calc(Stats::vector_y(particles))};
+  Stats::Statistics ang{Stats::calc(Stats::vector_ang(particles))};
+
+  CHECK(y.mean == doctest::Approx(2.6));
+  CHECK(y.sigma == doctest::Approx(0.953939));
+  CHECK(y.simm == doctest::Approx(-0.103676));
+  CHECK(y.app == doctest::Approx(0.66666));
+  CHECK(ang.mean == doctest::Approx(0.333333));
+  CHECK(ang.sigma == doctest::Approx(0.960902));
+  CHECK(ang.simm == doctest::Approx(-0.16823));
+  CHECK(ang.app == doctest::Approx(0.66666));
 }
