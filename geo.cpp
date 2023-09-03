@@ -78,3 +78,15 @@ const Geo::Point Geo::intsec(Geo::Line const& r, Geo::Line const& s) {
     }
   }
 }
+
+const Geo::Line Geo::ort(Geo::Line const& r, Geo::Point const& point) {
+  double new_angle{};
+  if (r.angle() >= 0) {
+    new_angle = -((M_PI / 2) - r.angle());
+  } else {
+    new_angle = (M_PI / 2) + r.angle();
+  }
+  Geo::Particle const k{point, new_angle};
+  Geo::Line const l{k};
+  return l;
+}

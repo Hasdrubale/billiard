@@ -53,6 +53,8 @@ struct Billiard {
 bool operator!=(Point a, Point b);
 
 const Point intsec(Line const& r, Line const& s);
+
+const Line ort(Line const&, Point const&);
 }  // namespace Geo
 
 #endif
