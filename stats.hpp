@@ -1,6 +1,7 @@
 #ifndef STATS_HPP
 #define STATS_HPP
 
+#include <random>
 #include <vector>
 
 #include "geo.hpp"

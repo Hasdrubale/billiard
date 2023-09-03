@@ -43,11 +43,11 @@ class Line {
 };
 
 struct Billiard {
-  double r1;
-  double r2;
-  double l;
-  char type;
-  int degree;
+  double r1{0.};
+  double r2{0.};
+  double l{0.};
+  char type{'l'};
+  int degree{0};
 };
 
 bool operator!=(Point a, Point b);
