@@ -5,10 +5,24 @@
 #include "move.hpp"
 
 const Geo::Point Mov::hit(Geo::Particle const& p, Geo::Billiard const& bill) {
+  Geo::Line go{p};
+  Geo::Line leftborder{99999999999., 0.};
+  const Geo::Point c{intsec(go, leftborder)};
+  assert(std::abs(c.x) <= 0.0000001);
+  if (std::abs(c.y) <= bill.r1 && c != p.position()) {
+    return c;
+  }
+
+  Geo::Line rightborder{0., 0., bill.l};
+  const Geo::Point d{intsec(rightborder, go)};
+  assert(std::abs(d.x - bill.l) <= 0.0001);
+  if (std::abs(d.y) <= bill.r2) {
+    return d;
+  }
+
   if (bill.type == 'l') {
     Geo::Point highsx{0., bill.r1};
     Geo::Point highdx{bill.l, bill.r2};
-    Geo::Line go{p};
 
     Geo::Line upborder{highsx, highdx};
     const Geo::Point a{intsec(go, upborder)};
@@ -27,20 +41,6 @@ const Geo::Point Mov::hit(Geo::Particle const& p, Geo::Billiard const& bill) {
         std::abs(b.y) >= bill.r2 && std::abs(b.y) <= bill.r1 &&
         b != p.position()) {
       return b;
-    }
-
-    Geo::Line leftborder{9999999., 0.};
-    const Geo::Point c{intsec(go, leftborder)};
-    assert(std::abs(c.x) <= 0.0001);
-    if (std::abs(c.y) <= bill.r1 && c != p.position()) {
-      return c;
-    }
-
-    Geo::Line rightborder{0., 0., bill.l};
-    const Geo::Point d{intsec(rightborder, go)};
-    assert(std::abs(d.x - bill.l) <= 0.0001);
-    if (std::abs(d.y) <= bill.r2) {
-      return d;
     }
   }
 
