@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cassert>
 #include <fstream>
 #include <iostream>
@@ -105,7 +106,7 @@ int main() {
       continue;
     }
 
-    /*if (command == 'a') {
+    if (command == 'a') {
       int n{};
       int exit{0};
       std::cin >> n;
@@ -113,25 +114,39 @@ int main() {
 
       std::random_device r;
       std::default_random_engine eng{r()};
-      Gen::PartG g{eng, mean_y, sigma_y, mean_ang, sigma_ang, r1};
-      Ric::Point def{0, 0};
-      Ric::Particle defp{def, 0.};
-      std::vector<Ric::Particle> particles{};
-      particles.resize(n, defp);
-      std::generate_n(particles.begin(), n, g);
-      Gen::PartM move(r1, r2, l);
 
-      for (Ric::Particle& p : particles) {
+      Geo::Point def{0., 0.};
+      Geo::Particle defaultp{def, 0.};
+      std::vector<Geo::Particle> particles{};
+      particles.resize(n, defaultp);
+      std::generate_n(particles.begin(), n, [&]() {
+        std::normal_distribution<double> dist_y{mean_y, sigma_y};
+        std::normal_distribution<double> dist_ang{mean_ang, sigma_ang};
+        Geo::Point pos{0., dist_y(eng)};
+        Geo::Particle p{pos, dist_ang(eng)};
+
+        while (p.angle() <= -M_PI / 2. || p.angle() >= M_PI / 2.) {
+          p.set_angle(dist_ang(eng));
+        }
+
+        while (p.position().y >= bill.r1 || p.position().y <= -bill.r1) {
+          pos.y = dist_y(eng);
+          p.set_position(pos);
+        }
+        return p;
+      });
+
+      for (Geo::Particle& p : particles) {
         out_init << p.position().x << " " << p.position().y << " " << p.angle()
                  << "\n";
         input.push_back(p);
-        move(p);
+        Mov::move(p, bill);
 
         // se la particella esce dal bordo destro viene salvata in outfin.txt,
         // se esce dal bordo sinistro viene contata come particella non uscita
         // dal biliardo
 
-        if (std::abs(p.position().x - l) < 0.00001) {
+        if (std::abs(p.position().x - bill.l) < 0.00001) {
           out_fin << p.position().x << " " << p.position().y << " " << p.angle()
                   << "\n";
           output.push_back(p);
@@ -144,7 +159,7 @@ int main() {
       continue;
     }
 
-    if (command == 's') {
+    /*if (command == 's') {
       Stats::Sample sample{input};
       const Stats::Statistics y{sample.statistics_y()};
       const Stats::Statistics ang{sample.statistics_ang()};
