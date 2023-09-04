@@ -25,20 +25,21 @@ class Particle {
 
 class Line {
  private:
-  // y=mx+q
-  double m_;
-  double q_;
-  double infinity_;
+
+  double a_;
+  double b_;
+  double c_;
 
  public:
-  Line(double m, double q, double infinity);
   Line(double m, double q);
   Line(Point a, Point b);
   Line(Particle p);
+  double a() const;
+  double b() const;
+  double c() const;
   double m() const;
   double q() const;
   double angle() const;
-  double infinity() const;
   // void set_new(Point& a, Point& b);
 };
 

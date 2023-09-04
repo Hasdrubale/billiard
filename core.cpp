@@ -6,14 +6,18 @@
 
 const Geo::Point Mov::hit(Geo::Particle const& p, Geo::Billiard const& bill) {
   Geo::Line go{p};
-  Geo::Line leftborder{99999999999., 0.};
+  const Geo::Point origin{0., 0.};
+  const Geo::Point highsx{0., bill.r1};
+  Geo::Line leftborder{origin, highsx};
   const Geo::Point c{intsec(go, leftborder)};
-  assert(std::abs(c.x) <= 0.0000001);
+  assert(std::abs(c.x) <= 0.0001);
   if (std::abs(c.y) <= bill.r1 && c != p.position()) {
     return c;
   }
 
-  Geo::Line rightborder{0., 0., bill.l};
+  const Geo::Point notorigin{bill.l, 0.};
+  const Geo::Point highdx{bill.l, bill.r2};
+  Geo::Line rightborder{notorigin, highdx};
   const Geo::Point d{intsec(rightborder, go)};
   assert(std::abs(d.x - bill.l) <= 0.0001);
   if (std::abs(d.y) <= bill.r2) {
@@ -21,8 +25,6 @@ const Geo::Point Mov::hit(Geo::Particle const& p, Geo::Billiard const& bill) {
   }
 
   if (bill.type == 'l') {
-    Geo::Point highsx{0., bill.r1};
-    Geo::Point highdx{bill.l, bill.r2};
 
     Geo::Line upborder{highsx, highdx};
     const Geo::Point a{intsec(go, upborder)};
@@ -43,8 +45,6 @@ const Geo::Point Mov::hit(Geo::Particle const& p, Geo::Billiard const& bill) {
       return b;
     }
   }
-
-  const Geo::Point origin{0., 0.};
   return origin;
 }
 
