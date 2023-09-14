@@ -25,7 +25,7 @@ int main() {
   r2
   l
   tipo parete
-  grado del polinomio
+  grado del polinomio (0 per biliardo lineare, circolare o parabolico)
   media y iniziale
   media angolo iniziale
   media sigma iniziale
@@ -159,10 +159,9 @@ int main() {
       continue;
     }
 
-    /*if (command == 's') {
-      Stats::Sample sample{input};
-      const Stats::Statistics y{sample.statistics_y()};
-      const Stats::Statistics ang{sample.statistics_ang()};
+    if (command == 's') {
+      Stats::Statistics y{Stats::calc(Stats::vector_y(input))};
+      Stats::Statistics ang{Stats::calc(Stats::vector_ang(input))};
 
       std::cout << "Posizione y iniziale:\nMedia: " << y.mean
                 << "\nDeviazione standard: " << y.sigma
@@ -211,9 +210,8 @@ int main() {
       }
       std::cout << "\n";
 
-      Stats::Sample samplef{output};
-      Stats::Statistics yf{samplef.statistics_y()};
-      Stats::Statistics angf{samplef.statistics_ang()};
+      Stats::Statistics yf{Stats::calc(Stats::vector_y(output))};
+      Stats::Statistics angf{Stats::calc(Stats::vector_ang(output))};
 
       std::cout << "Posizione y finale:\nMedia: " << yf.mean
                 << "\nDeviazione standard: " << yf.sigma
@@ -262,7 +260,7 @@ int main() {
       }
       std::cout << "\n";
       continue;
-    }*/
+    }
 
     if (command == 'q') {
       break;
