@@ -28,7 +28,8 @@ TEST_CASE("Testing intersection") {
   CHECK(p.y == doctest::Approx(1.4));
 }
 
-/*TEST_CASE("Testing motion with circular billiard") {
+TEST_CASE("Testing motion with circular billiard") {
+
   SUBCASE("Test 1") {
     Geo::Point pos{0., 1.};
     Geo::Particle p{pos, M_PI / 4};
@@ -38,7 +39,27 @@ TEST_CASE("Testing intersection") {
     CHECK(p.position().x == doctest::Approx(0.));
     CHECK(p.position().y == doctest::Approx(-0.701));
   }
-}*/
+
+  SUBCASE("Test 2"){
+    Geo::Point pos{0., 1.5};
+    Geo::Particle p{pos, -M_PI / 3};
+    Geo::Billiard bill{6., 5., 7., 'c', 0};
+    Mov::move(p, bill);
+    CHECK(p.angle() == doctest::Approx(-1.32));
+    CHECK(p.position().x == doctest::Approx(7.));
+    CHECK(p.position().y == doctest::Approx(3.879));
+  }
+
+  SUBCASE("Test 3"){
+    Geo::Point pos{0., -4};
+    Geo::Particle p{pos, -M_PI / 6};
+    Geo::Billiard bill{8., 4., 5., 'c', 0};
+    Mov::move(p, bill);
+    CHECK(p.angle() == doctest::Approx(-1.299));
+    CHECK(p.position().x == doctest::Approx(0.));
+    CHECK(p.position().y == doctest::Approx(1.61));
+  }
+}
 
 TEST_CASE("Testing motion with linear billiard") {
   SUBCASE("Test 1") {
