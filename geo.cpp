@@ -86,3 +86,15 @@ const Geo::Line Geo::ort(Geo::Line const& r, Geo::Point const& point) {
   Geo::Line const l{k};
   return l;
 }
+
+const double Geo::solve_eq(double const a, double const b, double const c,
+                           bool const what) {
+  // true: sqrt positive, false: sqrt negative
+  double sol;
+  if (what == true) {
+    sol = (-b + std::sqrt(b * b - 4 * a * c)) / (2 * a);
+  } else {
+    sol = (-b - std::sqrt(b * b - 4 * a * c)) / (2 * a);
+  }
+  return sol;
+}

@@ -25,7 +25,6 @@ const Geo::Point Mov::hit(Geo::Particle const& p, Geo::Billiard const& bill) {
   }
 
   if (bill.type == 'l') {
-
     Geo::Line upborder{highsx, highdx};
     const Geo::Point a{intsec(go, upborder)};
     if (std::abs(a.x) >= 0 && std::abs(a.x) <= bill.l &&
@@ -44,6 +43,10 @@ const Geo::Point Mov::hit(Geo::Particle const& p, Geo::Billiard const& bill) {
         b != p.position()) {
       return b;
     }
+  }
+
+  if (bill.type == 'c') {
+    //circumference is of type (x-alpha)^2 + (y-beta)^2 = gamma^2
   }
   return origin;
 }

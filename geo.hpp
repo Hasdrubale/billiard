@@ -56,6 +56,8 @@ bool operator!=(Point a, Point b);
 const Point intsec(Line const& r, Line const& s);
 
 const Line ort(Line const&, Point const&);
+
+const double solve_eq(double const a, double const b, double const c, bool const what);
 }  // namespace Geo
 
 #endif
