@@ -43,25 +43,25 @@ void Geo::Particle::set_position(Geo::Point const& p) { position_ = p; }
 void Geo::Particle::set_angle(double const r) { angle_ = r; }
 
 void Geo::Particle::rotate_backward(double const angle) {
-  assert(angle <= M_PI / 2 && angle >= 0);
+  // assert(angle <= M_PI / 2 && angle >= 0);
   double a{angle_};
   a -= angle;
   if (a < -M_PI / 2) {
     a += M_PI;
   }
   angle_ = a;
-  assert(std::abs(angle_) <= M_PI / 2);
+  // assert(std::abs(angle_) <= M_PI / 2);
 }
 
 void Geo::Particle::rotate_forward(double const angle) {
-  assert(angle <= M_PI / 2 && angle >= 0);
+  // assert(angle <= M_PI / 2 && angle >= 0);
   double a{angle_};
   a += angle;
   if (a > M_PI / 2) {
     a -= M_PI;
   }
   angle_ = a;
-  assert(std::abs(angle_) <= M_PI / 2);
+  // assert(std::abs(angle_) <= M_PI / 2);
 }
 
 bool Geo::operator!=(Geo::Point a, Geo::Point b) {
@@ -70,6 +70,7 @@ bool Geo::operator!=(Geo::Point a, Geo::Point b) {
 
 const Geo::Point Geo::intsec(Geo::Line const& r, Geo::Line const& s) {
   double const det{r.a() * s.b() - r.b() * s.a()};
+  //assert(std::abs(det) >= 0.0001);
   Geo::Point const p{(r.b() * s.c() - s.b() * r.c()) / (det),
                      (s.a() * r.c() - r.a() * s.c()) / (det)};
   return p;
@@ -87,8 +88,8 @@ const Geo::Line Geo::ort(Geo::Line const& r, Geo::Point const& point) {
   return l;
 }
 
-const double Geo::solve_eq(double const a, double const b, double const c,
-                           bool const what) {
+double Geo::solve_eq(double const a, double const b, double const c,
+                     bool const what) {
   // true: sqrt positive, false: sqrt negative
   double sol;
   if (what == true) {

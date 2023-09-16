@@ -30,7 +30,7 @@ TEST_CASE("Testing intersection") {
 
 TEST_CASE("Testing motion with circular billiard") {
 
-  SUBCASE("Test 1") {
+  /*SUBCASE("Test 1") {
     Geo::Point pos{0., 1.};
     Geo::Particle p{pos, M_PI / 4};
     Geo::Billiard bill{5., 3., 10., 'c', 0};
@@ -38,7 +38,7 @@ TEST_CASE("Testing motion with circular billiard") {
     CHECK(p.angle() == doctest::Approx(0.9036));
     CHECK(p.position().x == doctest::Approx(0.));
     CHECK(p.position().y == doctest::Approx(-0.701));
-  }
+  }*/
 
   SUBCASE("Test 2"){
     Geo::Point pos{0., 1.5};

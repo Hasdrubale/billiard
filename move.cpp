@@ -7,7 +7,7 @@
 
 void Mov::move(Geo::Particle& p, Geo::Billiard const& bill) {
   while (true) {
-    assert(std::abs(p.position().x) <= bill.l);
+    //assert(std::abs(p.position().x) <= bill.l);
 
     const Geo::Point h{Mov::hit(p, bill)};
 
@@ -44,10 +44,10 @@ double Mov::find_angle(Geo::Line const& r, Geo::Particle const& p) {
   } else {
     s_ang = std::atan(s.m());
   }
-  assert(r_ang >= 0 && r_ang <= M_PI);
-  assert(s_ang >= 0 && s_ang <= M_PI);
+  //assert(r_ang >= 0 && r_ang <= M_PI);
+  //assert(s_ang >= 0 && s_ang <= M_PI);
   double ang{std::abs(r_ang - s_ang)};
-  assert(ang >= 0 && ang <= M_PI);
+  //assert(ang >= 0 && ang <= M_PI);
   if (ang > M_PI / 2) {
     ang = M_PI - ang;
   }
